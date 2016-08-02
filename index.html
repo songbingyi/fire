@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>守望先锋射击练习</title>
+
+</head>
+<style type="text/css">
+* {margin:0; padding:0;}
+.playarea { width:800px; height:500px; border:#999 1px solid; margin: 20px auto;}
+.startbtn { width:50px; height:30px; position:absolute; top:30%; left:48%;}
+.text { width:200px; margin:0 auto;}
+</style>
+
+<body>
+
+<div class="playarea" onClick="fire(event)">
+	<div class="startbtn">
+		<input type="button" id="startBtn" value="开始" onClick="startBtn()">
+    </div>
+	<canvas id="playarea" width="800" height="500"></canvas>
+</div>
+<div class="text">
+	<p>倒计时：<span id="timer">10</span> 得分：<span id="score">0</span></p>
+</div>
+
+<script>
+var c = document.getElementById("playarea");
+var cxt = c.getContext("2d");
+var score = 0;
+
+var draw = function(){
+	cx = Math.floor(Math.random()*740)+30;
+	cy = Math.floor(Math.random()*440)+30;
+	cxt.fillStyle="#FF0000";
+	cxt.beginPath();
+	cxt.arc(cx,cy,15,0,Math.PI*2,true);
+	cxt.closePath();
+	cxt.fill();
+	//setTimeout("cxt.clearRect(0,0,800,500)",1000);
+	
+	score = score+1;
+	console.log(cx,cy,score);
+}
+draw();
+function fire(event){
+	event = event || window.event;
+	var fireX = event.offsetX,fireY = event.offsetY;
+	var disXL = cx - 17,disXR = cx + 17,disYL = cy - 17,disYR = cy + 17;
+	if(fireX<disXR && fireX>disXL && fireY<disYR && fireY>disYL){
+		cxt.clearRect(0,0,800,500);
+		draw();
+		}
+}
+
+function startBtn(){
+	document.getElementById("startBtn").style.display = "none";	
+}
+
+
+//setInterval(draw,2000);
+</script>
+</body>
+</html>
